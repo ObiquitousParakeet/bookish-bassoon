@@ -30,7 +30,7 @@ href='data:image/svg+xml;utf8,
 <path stroke-linecap="round" d="M22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2"/>
 </g>
 </svg>'>
-  <!-- STYLE -->
+
 <style>
 :root {
     --bg: #0f1115;
@@ -115,6 +115,28 @@ body {
     margin-top: 4px;
     display: block;
 }
+
+/* LIGHTBOX */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    z-index: 999;
+}
+
+.lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.lightbox.active {
+    display: flex;
+}
 </style>
 
 </head>
@@ -126,6 +148,11 @@ body {
 </div>
 
 <div class="grid" id="gallery"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+    <img id="lightbox-img" src="" alt="">
+</div>
 
 <script>
 // IMAGE DATA ARRAY
@@ -152,17 +179,18 @@ const images = [
     }
 ];
 
-// RENDER FUNCTION
+// ELEMENTS
 const gallery = document.getElementById("gallery");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
 
+// RENDER FUNCTION
 function renderGallery() {
     gallery.innerHTML = "";
 
     images.forEach(img => {
-        const card = document.createElement("a");
+        const card = document.createElement("div");
         card.className = "card";
-        card.href = img.href;
-        card.target = "_blank";
 
         card.innerHTML = `
             <img src="${img.src}" alt="${img.name}">
@@ -172,9 +200,24 @@ function renderGallery() {
             </div>
         `;
 
+        card.addEventListener("click", () => {
+            openLightbox(img.src);
+        });
+
         gallery.appendChild(card);
     });
 }
+
+// LIGHTBOX
+function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add("active");
+}
+
+lightbox.addEventListener("click", () => {
+    lightbox.classList.remove("active");
+    lightboxImg.src = "";
+});
 
 // INIT
 renderGallery();
