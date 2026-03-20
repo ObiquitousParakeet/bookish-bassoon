@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- BASIC META -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TITLE -->
+<title>Screenshot Gallery</title>
+
+<!-- SEO -->
+<meta name="title" content="Screenshot Gallery">
+<meta name="description" content="Screenshot Gallery">
+<meta name="keywords" content="gallery, screenshots, images">
+<meta name="author" content="Screenshot Gallery">
+
+<!-- OPEN GRAPH -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Screenshot Gallery">
+<meta property="og:description" content="Screenshot Gallery">
+<meta property="og:image" content="https://github.io/favicon.svg">
+
+<!-- FAVICON -->
+<link rel="icon" type="image/svg+xml"
+href='data:image/svg+xml;utf8,
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+<g fill="none" stroke="white" stroke-width="1.5">
+<path stroke-linecap="round" d="M22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2"/>
+</g>
+</svg>'>
+  <!-- STYLE -->
+<style>
+:root {
+    --bg: #0f1115;
+    --card: #1a1d24;
+    --text: #e6e6e6;
+    --muted: #9aa3ad;
+    --accent: #4da3ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 40px;
+}
+
+/* HEADER */
+.header {
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.header p {
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: 0.25s ease;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(77,163,255,0.4);
+}
+
+/* IMAGE */
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+}
+
+/* CONTENT */
+.card-content {
+    padding: 14px;
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.card-link {
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 4px;
+    display: block;
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+    <h1>Screenshot Gallery</h1>
+    <p>Dynamic image cards</p>
+</div>
+
+<div class="grid" id="gallery"></div>
+
+<script>
+// IMAGE DATA ARRAY
+const images = [
+    {
+        name: "Project One",
+        src: "https://picsum.photos/500/300?1",
+        href: "#"
+    },
+    {
+        name: "Project Two",
+        src: "https://picsum.photos/500/300?2",
+        href: "#"
+    },
+    {
+        name: "Project Three",
+        src: "https://picsum.photos/500/300?3",
+        href: "#"
+    },
+    {
+        name: "Project Four",
+        src: "https://picsum.photos/500/300?4",
+        href: "#"
+    }
+];
+
+// RENDER FUNCTION
+const gallery = document.getElementById("gallery");
+
+function renderGallery() {
+    gallery.innerHTML = "";
+
+    images.forEach(img => {
+        const card = document.createElement("a");
+        card.className = "card";
+        card.href = img.href;
+        card.target = "_blank";
+
+        card.innerHTML = `
+            <img src="${img.src}" alt="${img.name}">
+            <div class="card-content">
+                <div class="card-title">${img.name}</div>
+                <span class="card-link">View →</span>
+            </div>
+        `;
+
+        gallery.appendChild(card);
+    });
+}
+
+// INIT
+renderGallery();
+</script>
+
+</body>
+</html>
